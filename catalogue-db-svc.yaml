@@ -44,7 +44,7 @@ metadata:
     name: catalogue-db-cpx
 spec:
   ports:
-    port: 3306
+  - port: 3306
     targetPort: 3306
   selector:
     app: catalogue-db
