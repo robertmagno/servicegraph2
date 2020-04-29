@@ -43,8 +43,10 @@ metadata:
   labels:
     name: session-db-cpx
 spec:
+  type: ClusterIP
+  clusterIP: None
   ports:
-    port: 6379
+  - port: 6379
     targetPort: 6379
   selector:
     app: session-db
