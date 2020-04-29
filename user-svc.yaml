@@ -43,8 +43,10 @@ metadata:
   labels:
     name: user-cpx
 spec:
+  type: ClusterIP
+  clusterIP: None
   ports:
-    port: 87
+  - port: 87
     targetPort: 80
   selector:
     app: user
