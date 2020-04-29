@@ -48,8 +48,10 @@ metadata:
   labels:
     name: rabbitmq-cpx
 spec:
+  type: ClusterIP
+  clusterIP: None
   ports:
-    port: 5672
+  - port: 5672
     targetPort: 5672
   selector:
     app: rabbitmq
