@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  labels:
+    name: payment
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 84
+    targetPort: 84
+  selector:
+    name: cpx
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: payment-ingress
+  annotations:
+   kubernetes.io/ingress.class: "cpx"
+   ingress.citrix.com/insecure-port: "84"
+spec:
+  rules:
+  - host: payment.default.svc.cluster.local
+    http:
+      paths:
+      - backend:
+          serviceName: payment-cpx
+          servicePort: 84
+  - host: payment
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: payment-cpx
+          servicePort: 84
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-cpx
+  labels:
+    name: payment-cpx
+spec:
+  ports:
+    port: 84
+    targetPort: 80
+  selector:
+    app: payment

@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts
+  labels:
+    name: carts
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 81
+    targetPort: 81
+  selector:
+    name: cpx
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: carts-ingress
+  annotations:
+   kubernetes.io/ingress.class: "cpx"
+   ingress.citrix.com/insecure-port: "81"
+spec:
+  rules:
+  - host: carts.default.svc.cluster.local
+    http:
+      paths:
+      - backend:
+          serviceName: carts-cpx
+          servicePort: 81
+  - host: carts
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: carts-cpx
+          servicePort: 81
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts-cpx
+  labels:
+    name: carts-cpx
+spec:
+  ports:
+    port: 81
+    targetPort: 80
+  selector:
+    app: carts

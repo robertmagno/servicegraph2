@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-db
+  labels:
+    name: user-db
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 27019
+    targetPort: 27019
+  selector:
+    name: cpx
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: user-db-ingress
+  annotations:
+   kubernetes.io/ingress.class: "cpx"
+   ingress.citrix.com/insecure-port: "27019"
+spec:
+  rules:
+  - host: user-db.default.svc.cluster.local
+    http:
+      paths:
+      - backend:
+          serviceName: user-db-cpx
+          servicePort: 27019
+  - host: user-db
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: user-db-cpx
+          servicePort: 27019
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-db-cpx
+  labels:
+    name: user-db-cpx
+spec:
+  ports:
+    port: 27019
+    targetPort: 27017
+  selector:
+    app: user-db
