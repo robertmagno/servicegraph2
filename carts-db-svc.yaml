@@ -44,7 +44,7 @@ metadata:
     name: carts-db-cpx
 spec:
   ports:
-    port: 27017
+  - port: 27017
     targetPort: 27017
   selector:
     app: carts-db
