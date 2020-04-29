@@ -43,8 +43,10 @@ metadata:
   labels:
     name: payment-cpx
 spec:
+  type: ClusterIP
+  clusterIP: None
   ports:
-    port: 84
+  - port: 84
     targetPort: 80
   selector:
     app: payment
