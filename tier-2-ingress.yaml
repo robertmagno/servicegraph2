@@ -6,10 +6,10 @@ metadata:
      kubernetes.io/ingress.class: "tier-2-cpx"
 spec:
   rules:
-  - host: hipster-citrix-demo.com
+  - host: sockshop.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: frontend-app
-          servicePort: 8080
+          serviceName: front-end
+          servicePort: 80
