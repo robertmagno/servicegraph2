@@ -22,7 +22,7 @@ kind: Ingress
 metadata:
   name: rabbitmq-ingress
   annotations:
-   kubernetes.io/ingress.class: "cpx"
+   kubernetes.io/ingress.class: "tier-2-cpx"
    ingress.citrix.com/insecure-port: "5672"
 spec:
   rules:
