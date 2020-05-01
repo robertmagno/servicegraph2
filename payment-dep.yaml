@@ -1,15 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: payment
   name: payment
-  namespace: sock-shop
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
       name: payment
@@ -27,30 +21,10 @@ spec:
       containers:
       - image: weaveworksdemos/payment:0.4.3
         imagePullPolicy: IfNotPresent
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: 80
-            scheme: HTTP
-          initialDelaySeconds: 300
-          periodSeconds: 3
-          successThreshold: 1
-          timeoutSeconds: 1
         name: payment
         ports:
         - containerPort: 80
           protocol: TCP
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: 80
-            scheme: HTTP
-          initialDelaySeconds: 180
-          periodSeconds: 3
-          successThreshold: 1
-          timeoutSeconds: 1
         resources:
           limits:
             cpu: 100m
