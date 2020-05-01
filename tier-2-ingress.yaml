@@ -4,6 +4,7 @@ metadata:
   name: tier-2-ingress
   annotations:
      kubernetes.io/ingress.class: "tier-2-cpx"
+     kubernetes.io/insecure-port: "80"
 spec:
   rules:
   - host: sockshop.com
