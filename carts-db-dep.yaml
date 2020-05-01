@@ -1,17 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: carts-db
   name: carts-db
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
-      name: carts-db
+      app: carts-db
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -21,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        name: carts-db
+        app: carts-db
     spec:
       containers:
       - image: mongo
