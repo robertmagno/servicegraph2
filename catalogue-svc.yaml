@@ -10,7 +10,7 @@ spec:
   - port: 82
     targetPort: 82
   selector:
-    name: cpx
+    app: cpx
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
