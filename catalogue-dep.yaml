@@ -1,18 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: catalogue
   name: catalogue
-  namespace: sock-shop
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
-      name: catalogue
+      app: catalogue
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -22,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        name: catalogue
+        app: catalogue
     spec:
       containers:
       - args:
