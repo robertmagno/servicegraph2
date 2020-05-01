@@ -1,18 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: session-db
   name: session-db
-  namespace: sock-shop
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
-      name: session-db
+      app: session-db
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -24,7 +18,7 @@ spec:
         prometheus.io.scrape: "false"
       creationTimestamp: null
       labels:
-        name: session-db
+        app: session-db
     spec:
       containers:
       - image: redis:alpine
