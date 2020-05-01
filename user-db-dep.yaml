@@ -1,15 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: user-db
   name: user-db
-  namespace: sock-shop
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
       name: user-db
