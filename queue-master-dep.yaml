@@ -1,18 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    name: queue-master
   name: queue-master
-  namespace: sock-shop
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 2147483647
   selector:
     matchLabels:
-      name: queue-master
+      app: queue-master
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -22,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        name: queue-master
+        app: queue-master
     spec:
       containers:
       - env:
@@ -33,30 +27,10 @@ spec:
             -Djava.security.egd=file:/dev/urandom
         image: weaveworksdemos/queue-master:0.3.1
         imagePullPolicy: IfNotPresent
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: 80
-            scheme: HTTP
-          initialDelaySeconds: 300
-          periodSeconds: 3
-          successThreshold: 1
-          timeoutSeconds: 1
         name: queue-master
         ports:
         - containerPort: 80
           protocol: TCP
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: 80
-            scheme: HTTP
-          initialDelaySeconds: 180
-          periodSeconds: 3
-          successThreshold: 1
-          timeoutSeconds: 1
         resources:
           limits:
             cpu: 300m
