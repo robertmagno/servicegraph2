@@ -11,7 +11,7 @@ spec:
   - port: 6379
     targetPort: 6379
   selector:
-    name: cpx
+    app: cpx
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
