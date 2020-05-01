@@ -1,39 +1,60 @@
----
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: carts-db
+  creationTimestamp: null
   labels:
     name: carts-db
+  name: carts-db
   namespace: sock-shop
 spec:
+  progressDeadlineSeconds: 2147483647
   replicas: 1
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      name: carts-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         name: carts-db
     spec:
       containers:
-      - name: carts-db
-        image: mongo
+      - image: mongo
+        imagePullPolicy: Always
+        name: carts-db
         ports:
-        - name: mongo
-          containerPort: 27017
+        - containerPort: 27017
+          name: mongo
+          protocol: TCP
+        resources: {}
         securityContext:
           capabilities:
-            drop:
-              - all
             add:
-              - CHOWN
-              - SETGID
-              - SETUID
+            - CHOWN
+            - SETGID
+            - SETUID
+            drop:
+            - all
           readOnlyRootFilesystem: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
-      volumes:
-        - name: tmp-volume
-          emptyDir:
-            medium: Memory
+      dnsPolicy: ClusterFirst
       nodeSelector:
         beta.kubernetes.io/os: linux
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: tmp-volume

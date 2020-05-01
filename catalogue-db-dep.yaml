@@ -1,28 +1,49 @@
----
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalogue-db
+  creationTimestamp: null
   labels:
     name: catalogue-db
+  name: catalogue-db
   namespace: sock-shop
 spec:
+  progressDeadlineSeconds: 2147483647
   replicas: 1
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      name: catalogue-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         name: catalogue-db
     spec:
       containers:
-      - name: catalogue-db
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: fake_password
+        - name: MYSQL_DATABASE
+          value: socksdb
         image: weaveworksdemos/catalogue-db:0.3.0
-        env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: fake_password
-          - name: MYSQL_DATABASE
-            value: socksdb
+        imagePullPolicy: IfNotPresent
+        name: catalogue-db
         ports:
-        - name: mysql
-          containerPort: 3306
+        - containerPort: 3306
+          name: mysql
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
       nodeSelector:
         beta.kubernetes.io/os: linux
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
