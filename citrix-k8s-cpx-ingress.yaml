@@ -138,7 +138,7 @@ metadata:
   labels:
     app: cpx-service
 spec:
-#  type: NodePort
+  type: NodePort
   ports:
   - port: 80
     protocol: TCP
