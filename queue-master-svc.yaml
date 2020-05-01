@@ -19,7 +19,7 @@ kind: Ingress
 metadata:
   name: queue-master-ingress
   annotations:
-   kubernetes.io/ingress.class: "cpx"
+   kubernetes.io/ingress.class: "tier-2-cpx"
    ingress.citrix.com/insecure-port: "85"
 spec:
   rules:
