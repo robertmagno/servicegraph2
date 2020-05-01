@@ -17,7 +17,7 @@ kind: Ingress
 metadata:
   name: orders-db-ingress
   annotations:
-   kubernetes.io/ingress.class: "cpx"
+   kubernetes.io/ingress.class: "tier-2-cpx"
    ingress.citrix.com/insecure-port: "27018"
 spec:
   rules:
